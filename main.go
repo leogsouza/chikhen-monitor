@@ -27,14 +27,14 @@ type Hen struct {
 
 func main() {
 
-	hen := &Hen{"Raven Chick", 150, 10, 48, 4284, 21429}
+	hen := &Hen{"Raven Chick", 150, 10, 51, 10544, 21429}
 
 	totalHours := measureTimeProduction(hen)
-
 	fmt.Print("Production Time: ")
 	calculateDecimalToTime(totalHours)
-	fmt.Print("Remaining Time: ")
 	remainingHours := measureTimeRemaining(hen)
+	fmt.Print("Remaining Time: ")
+
 	calculateDecimalToTime(remainingHours)
 }
 
@@ -59,10 +59,12 @@ func measureTimeProduction(hen *Hen) float64 {
 	totalDays := float64(hen.price) / result
 	totalHours := totalDays * HOURSDAY
 
-	return totalHours
+	return math.Ceil(totalHours*100000) / 100000
 }
 
 func measureTimeRemaining(hen *Hen) float64 {
-
-	return (float64(hen.totalToBuy) - float64(hen.laidEggs)) / (float64(hen.totalBirds) * float64(hen.eggsHour))
+	var production float64
+	production = float64(hen.totalBirds) * float64(hen.eggsHour)
+	remaining := hen.totalToBuy - hen.laidEggs
+	return float64(remaining) / production
 }
