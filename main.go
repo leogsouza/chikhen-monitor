@@ -25,7 +25,10 @@ type Hen struct {
 }
 
 func main() {
+	run()
+}
 
+func run() {
 	hen := &Hen{"Raven Chick", 150, 10, 51, 7000, 21429}
 
 	totalHours := calculateTimeProduction(hen)
