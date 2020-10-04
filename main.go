@@ -1,7 +1,19 @@
 package main
 
 import (
+	"flag"
 	"fmt"
+)
+
+var (
+	typeHen      int
+	totalBirds   int
+	producedEggs int
+)
+
+const (
+	RAVENCHICK = iota + 1
+	COTTONCHICK
 )
 
 //	- hen price: 150
@@ -24,20 +36,40 @@ type Hen struct {
 	totalToBuy int
 }
 
-func main() {
-	run()
+var hens map[int]*Hen
+
+func init() {
+	hens = make(map[int]*Hen)
+	hens[RAVENCHICK] = &Hen{"Raven Chick", 150, 10, 0, 0, 21429}
+	hens[COTTONCHICK] = &Hen{"Cotton Chick", 1500, 105, 0, 0, 0}
+
+	flag.IntVar(&typeHen, "t", 1, "Hen type. Default is 1")
+	flag.IntVar(&totalBirds, "b", -1, "Total birds from type")
+	flag.IntVar(&producedEggs, "p", -1, "Amount of eggs produced by a hen type")
+
 }
 
-func run() {
-	hen := &Hen{"Raven Chick", 150, 10, 51, 7000, 21429}
+func main() {
+	flag.Parse()
+
+	hen := getHenByType(typeHen)
+	hen.totalBirds = totalBirds
+	hen.laidEggs = producedEggs
+
+	run(hen)
+}
+
+func run(hen *Hen) {
 
 	totalHours := calculateTimeProduction(hen)
-	fmt.Println(totalHours)
 	fmt.Print("Production Time: ")
 	fmt.Println(printTimeCalculated(calculateDecimalToTime(totalHours)))
 	remainingHours := calculateTimeRemaining(hen)
-	fmt.Println(remainingHours)
 	fmt.Print("Remaining Time: ")
 
 	fmt.Println(printTimeCalculated(calculateDecimalToTime(remainingHours)))
+}
+
+func getHenByType(typeHen int) *Hen {
+	return hens[typeHen]
 }

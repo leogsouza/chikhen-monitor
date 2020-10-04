@@ -5,5 +5,6 @@ import (
 )
 
 func TestRun(t *testing.T) {
-	run()
+	hen := &Hen{}
+	run(hen)
 }
