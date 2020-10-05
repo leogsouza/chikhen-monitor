@@ -44,13 +44,18 @@ func init() {
 	hens[COTTONCHICK] = &Hen{"Cotton Chick", 1500, 105, 0, 0, 0}
 
 	flag.IntVar(&typeHen, "t", 1, "Hen type. Default is 1")
-	flag.IntVar(&totalBirds, "b", -1, "Total birds from type")
-	flag.IntVar(&producedEggs, "p", -1, "Amount of eggs produced by a hen type")
+	flag.IntVar(&totalBirds, "b", 0, "Total birds from type")
+	flag.IntVar(&producedEggs, "p", 0, "Amount of eggs produced by a hen type")
 
 }
 
 func main() {
 	flag.Parse()
+
+	if typeHen < RAVENCHICK || totalBirds < 0 || producedEggs < 0 {
+		flag.Usage()
+		return
+	}
 
 	hen := getHenByType(typeHen)
 	hen.totalBirds = totalBirds
