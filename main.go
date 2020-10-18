@@ -56,6 +56,11 @@ func init() {
 func main() {
 	flag.Parse()
 
+	if typeHen < RAVENCHICK || totalBirds < 0 || producedEggs < 0 {
+		flag.Usage()
+		return
+	}
+
 	hen := getHenByType(typeHen)
 	hen.totalBirds = totalBirds
 	hen.laidEggs = producedEggs
