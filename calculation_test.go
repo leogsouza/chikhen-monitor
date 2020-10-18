@@ -33,8 +33,8 @@ func TestCalculateTimeProduction(t *testing.T) {
 		in       *Hen
 		expected float64
 	}{
-		{&Hen{"Raven Chick", 150, 10, 51, 7000, 21429}, 42.01681},
-		{&Hen{"Raven Chick", 150, 10, 1, 0, 21429}, 2142.85715},
+		{&Hen{"Raven Chick", 150, 10, 51, 7000, 21429, 0}, 42.01681},
+		{&Hen{"Raven Chick", 150, 10, 1, 0, 21429, 0}, 2142.85715},
 	}
 
 	for _, tc := range tests {
@@ -49,8 +49,8 @@ func TestCalculateTimeRemaining(t *testing.T) {
 		in       *Hen
 		expected float64
 	}{
-		{&Hen{"Raven Chick", 150, 10, 51, 7000, 21429}, 28.2921568627451},
-		{&Hen{"Raven Chick", 150, 10, 1, 0, 21429}, 2142.9},
+		{&Hen{"Raven Chick", 150, 10, 51, 7000, 21429, 0}, 28.2921568627451},
+		{&Hen{"Raven Chick", 150, 10, 1, 0, 21429, 0}, 2142.9},
 	}
 
 	for _, tc := range tests {

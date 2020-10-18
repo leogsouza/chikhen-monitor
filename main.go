@@ -3,12 +3,14 @@ package main
 import (
 	"flag"
 	"fmt"
+	"time"
 )
 
 var (
 	typeHen      int
 	totalBirds   int
 	producedEggs int
+	goldBalance  float64
 )
 
 const (
@@ -28,24 +30,26 @@ const (
 )
 
 type Hen struct {
-	name       string
-	price      int
-	eggsHour   int
-	totalBirds int
-	laidEggs   int
-	totalToBuy int
+	name        string
+	price       int
+	eggsHour    int
+	totalBirds  int
+	laidEggs    int
+	totalToBuy  int
+	goldBalance float64
 }
 
 var hens map[int]*Hen
 
 func init() {
 	hens = make(map[int]*Hen)
-	hens[RAVENCHICK] = &Hen{"Raven Chick", 150, 10, 0, 0, 21429}
-	hens[COTTONCHICK] = &Hen{"Cotton Chick", 1500, 105, 0, 0, 0}
+	hens[RAVENCHICK] = &Hen{"Raven Chick", 150, 10, 0, 0, 21429, 0}
+	hens[COTTONCHICK] = &Hen{"Cotton Chick", 1500, 105, 0, 0, 0, 0}
 
-	flag.IntVar(&typeHen, "t", 1, "Hen type. Default is 1")
-	flag.IntVar(&totalBirds, "b", -1, "Total birds from type")
-	flag.IntVar(&producedEggs, "p", -1, "Amount of eggs produced by a hen type")
+	flag.IntVar(&typeHen, "th", 1, "Hen type. Default is 1")
+	flag.IntVar(&totalBirds, "tb", -1, "Total birds from type")
+	flag.IntVar(&producedEggs, "ep", -1, "Amount of eggs produced by a hen type")
+	flag.Float64Var(&goldBalance, "gb", 0, "Actual gold balance")
 
 }
 
@@ -55,7 +59,7 @@ func main() {
 	hen := getHenByType(typeHen)
 	hen.totalBirds = totalBirds
 	hen.laidEggs = producedEggs
-
+	hen.goldBalance = goldBalance
 	run(hen)
 }
 
@@ -66,8 +70,12 @@ func run(hen *Hen) {
 	fmt.Println(printTimeCalculated(calculateDecimalToTime(totalHours)))
 	remainingHours := calculateTimeRemaining(hen)
 	fmt.Print("Remaining Time: ")
+	days, hours, minutes, seconds := calculateDecimalToTime(remainingHours)
+	timeEnd := time.Now().Add(time.Duration(seconds) * time.Second).Add(time.Duration(minutes) * time.Minute).Add(time.Duration(hours) * time.Hour).Add(time.Duration(days*HOURSDAY) * time.Hour)
+	fmt.Println(printTimeCalculated(days, hours, minutes, seconds))
 
-	fmt.Println(printTimeCalculated(calculateDecimalToTime(remainingHours)))
+	fmt.Println("Buy new hen in", timeEnd.Format("02/01/2006 15:04:05"))
+
 }
 
 func getHenByType(typeHen int) *Hen {
