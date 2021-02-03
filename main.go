@@ -13,9 +13,14 @@ var (
 	goldBalance  float64
 )
 
+// Hens types
 const (
-	RAVENCHICK = iota + 1
-	COTTONCHICK
+	RAVEN = iota + 1
+	COTTON
+	SAPPHIRE
+	SPAROW
+	CLOVER
+	GOLDEN
 )
 
 //	- hen price: 150
@@ -35,7 +40,6 @@ type Hen struct {
 	eggsHour    int
 	totalBirds  int
 	laidEggs    int
-	totalToBuy  int
 	goldBalance float64
 }
 
@@ -43,8 +47,12 @@ var hens map[int]*Hen
 
 func init() {
 	hens = make(map[int]*Hen)
-	hens[RAVENCHICK] = &Hen{"Raven Chick", 150, 10, 0, 0, 21429, 0}
-	hens[COTTONCHICK] = &Hen{"Cotton Chick", 1500, 105, 0, 0, 0, 0}
+	hens[RAVEN] = &Hen{"Raven Chick", 150, 10, 0, 0, 0}
+	hens[COTTON] = &Hen{"Cotton Chick", 1500, 105, 0, 0, 0}
+	hens[SAPPHIRE] = &Hen{"Sapphire Chick", 7500, 540, 0, 0, 0}
+	hens[SPAROW] = &Hen{"Sparow Chick", 15000, 1100, 0, 0, 0}
+	hens[CLOVER] = &Hen{"Clover Chick", 150000, 12500, 0, 0, 0}
+	hens[GOLDEN] = &Hen{"Golden Chick", 450000, 40000, 0, 0, 0}
 
 	flag.IntVar(&typeHen, "th", 1, "Hen type. Default is 1")
 	flag.IntVar(&totalBirds, "tb", 0, "Total birds from type")
@@ -56,7 +64,7 @@ func init() {
 func main() {
 	flag.Parse()
 
-	if typeHen < RAVENCHICK || totalBirds < 0 || producedEggs < 0 {
+	if typeHen < RAVEN || totalBirds < 0 || producedEggs < 0 {
 		flag.Usage()
 		return
 	}
