@@ -47,8 +47,8 @@ func init() {
 	hens[COTTONCHICK] = &Hen{"Cotton Chick", 1500, 105, 0, 0, 0, 0}
 
 	flag.IntVar(&typeHen, "th", 1, "Hen type. Default is 1")
-	flag.IntVar(&totalBirds, "tb", -1, "Total birds from type")
-	flag.IntVar(&producedEggs, "ep", -1, "Amount of eggs produced by a hen type")
+	flag.IntVar(&totalBirds, "tb", 0, "Total birds from type")
+	flag.IntVar(&producedEggs, "ep", 0, "Amount of eggs produced by a hen type")
 	flag.Float64Var(&goldBalance, "gb", 0, "Actual gold balance")
 
 }
