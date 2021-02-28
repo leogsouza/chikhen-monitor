@@ -20,11 +20,15 @@ func printTimeCalculated(days, hours, minutes, seconds int) string {
 
 func calculateTimeProduction(hen *Hen) float64 {
 
-	priceUnit := float64(hen.eggsHour) * (1 - COMMISION)
-	totalEggs := (float64(hen.price)) / priceUnit * 1000
-	totalDay := float64(hen.eggsHour) * float64(HOURSDAY)
-	totalHours := totalEggs / totalDay * 24
-
+	var total float64
+	total = float64(hen.eggsHour*hen.totalBirds) * HOURSDAY / 100
+	difference := total * COMMISION
+	result := total - difference
+	totalDays := (float64(hen.price) - hen.goldBalance) / result
+	totalHours := totalDays * HOURSDAY
+	if totalHours <= 0 {
+		return 0
+	}
 	return math.Ceil(totalHours*100000) / 100000
 }
 
@@ -36,6 +40,13 @@ func calculateTimeRemaining(hen *Hen) float64 {
 }
 
 func calculateEggsToBuy(hen *Hen) float64 {
-	totalToBuy := (float64(hen.price) - hen.goldBalance) / (float64(hen.eggsHour) * 0.001 * (1 - COMMISION))
+	var factor float64
+	factor = float64(HOURSDAY) / 100
+	difference := factor * COMMISION
+	result := (factor - difference)
+	totalToBuy := ((float64(hen.price) - hen.goldBalance) / result * 24) - float64(hen.laidEggs)
+	if totalToBuy <= 0 {
+		totalToBuy = 0
+	}
 	return totalToBuy
 }

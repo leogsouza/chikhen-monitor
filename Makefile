@@ -12,7 +12,7 @@ build-windows:
 build: build-linux build-windows
 
 execute:
-	./bin/main.exe
+	./${BIN_DIR}/${BINARY_NAME}.exe
 
 run: build execute
 

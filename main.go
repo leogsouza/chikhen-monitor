@@ -79,16 +79,16 @@ func main() {
 func run(hen *Hen) {
 
 	totalHours := calculateTimeProduction(hen)
+	if totalHours == 0 {
+		hensToBuy := hen.goldBalance / float64(hen.price)
+		fmt.Printf("You have a opportunity to buy more %d hens\n", int(hensToBuy))
+	}
 	fmt.Print("Production Time: ")
-	fmt.Println(printTimeCalculated(calculateDecimalToTime(totalHours)))
-	remainingHours := calculateTimeRemaining(hen)
-	fmt.Print("Remaining Time: ")
-	days, hours, minutes, seconds := calculateDecimalToTime(remainingHours)
-	timeEnd := time.Now().Add(time.Duration(seconds) * time.Second).Add(time.Duration(minutes) * time.Minute).Add(time.Duration(hours) * time.Hour).Add(time.Duration(days*HOURSDAY) * time.Hour)
+	days, hours, minutes, seconds := calculateDecimalToTime(totalHours)
 	fmt.Println(printTimeCalculated(days, hours, minutes, seconds))
-
+	fmt.Println("Total eggs to buy a new unit:", int(calculateEggsToBuy(hen)))
+	timeEnd := time.Now().Add(time.Duration(seconds) * time.Second).Add(time.Duration(minutes) * time.Minute).Add(time.Duration(hours) * time.Hour).Add(time.Duration(days*HOURSDAY) * time.Hour)
 	fmt.Println("Buy new hen in", timeEnd.Format("02/01/2006 15:04:05"))
-
 }
 
 func getHenByType(typeHen int) *Hen {
